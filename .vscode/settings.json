@@ -1,0 +1,8 @@
+{
+  "code-runner.executorMap": {
+    "typescript": "clear && npx ts-node --files",
+  },
+  "cSpell.words": [
+    "Liskov"
+  ]
+}
