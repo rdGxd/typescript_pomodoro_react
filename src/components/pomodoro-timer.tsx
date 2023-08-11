@@ -17,13 +17,21 @@ export function PomodoroTimer(props: Props): JSX.Element {
   // Definindo o estado do contador principal do Pomodoro usando o valor fornecido nas props
   const [mainTime, setMainTime] = useState(props.pomodoroTime);
   const [timeCounting, setTimeCounting] = useState(false); // Estado para controlar pausa/play do timer
-  const [working, setWorking] = useState(false); // Estado para controlar fase de trabalho/descanso
+  const [working, setWorking] = useState(false); // Estado para controlar fase de trabalho
+  const [resting, setResting] = useState(false); // Estado para controlar fase de descanso
 
-  // Efeito para adicionar classe CSS quando a fase de trabalho estiver ativa
+  // Efeito para adicionar/remover classe CSS quando a fase de trabalho ou descanso estiver ativa
   useEffect(() => {
-    if (working) document.body.classList.add('working'); // Adiciona classe CSS
-    else document.body.classList.remove('working'); // Remove classe CSS
-  }, [working]);
+    if (working) {
+      document.body.classList.add('working'); // Adiciona classe CSS de trabalho
+      document.body.classList.remove('resting'); // Remove classe CSS de descanso
+    } else if (resting) {
+      document.body.classList.remove('working'); // Remove classe CSS de trabalho
+      document.body.classList.add('resting'); // Adiciona classe CSS de descanso
+    } else {
+      document.body.classList.remove('working', 'resting'); // Remove ambas as classes
+    }
+  }, [working, resting]);
 
   // Utilizando o hook useInterval para atualizar o contador a cada segundo
   useInterval(
@@ -37,6 +45,20 @@ export function PomodoroTimer(props: Props): JSX.Element {
   const configureWorking = () => {
     setTimeCounting(true); // Inicia a contagem
     setWorking(true); // Define a fase de trabalho como ativa
+    setResting(false); // Define a fase de descanso como inativa
+    setMainTime(props.pomodoroTime); // Define o tempo inicial do contador
+  };
+
+  // Função para configurar a fase de descanso
+  const configureResting = (isLong: boolean) => {
+    setTimeCounting(true); // Inicia a contagem
+    setWorking(false); // Define a fase de trabalho como inativa
+    setResting(true); // Define a fase de descanso como ativa
+    if (isLong) {
+      setMainTime(props.longRestTime); // Define o tempo de descanso longo
+    } else {
+      setMainTime(props.shortRestTime); // Define o tempo de descanso curto
+    }
   };
 
   // Renderizando o componente PomodoroTimer
@@ -47,11 +69,14 @@ export function PomodoroTimer(props: Props): JSX.Element {
       <Timer mainTime={mainTime} />
       {/* Renderiza botões de controle */}
       <div className="controls">
-        <Button text="Work" onClick={() => configureWorking()} />{' '}
+        <Button text="Work" onClick={() => configureWorking()} />
         {/* Botão para iniciar a fase de trabalho */}
-        <Button text="teste" onClick={() => console.log(1)} />{' '}
-        {/* Botão de teste */}
+        <Button text="Rest" onClick={() => configureResting(false)} />
+        {/* Botão para iniciar a fase de descanso curto */}
+        <Button text="Long Rest" onClick={() => configureResting(true)} />
+        {/* Botão para iniciar a fase de descanso longo */}
         <Button
+          className={!working && !resting ? 'hidden' : ''}
           text={timeCounting ? 'Pause' : 'Play'}
           onClick={() => setTimeCounting(!timeCounting)} // Alterna entre pausa/play
         />
