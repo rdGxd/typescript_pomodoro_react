@@ -1,3 +1,4 @@
+/* Estilo global para redefinir margens, preenchimentos, bordas e caixa de modelo padrão */
 * {
   margin: 0;
   padding: 0;
@@ -5,6 +6,76 @@
   box-sizing: border-box;
 }
 
+/* Estilo básico para o corpo da página */
 body {
   font-family: sans-serif;
+  background-color: #41e2ba; /* Cor de fundo da página */
+  transition: background-color 300ms ease-in-out; /* Transição suave da cor de fundo */
+  line-height: 1.5; /* Espaçamento entre linhas */
+}
+
+/* Estilo para o contêiner principal */
+.container {
+  max-width: 640px;
+  margin: 0 auto; /* Centralizar horizontalmente */
+}
+
+/* Estilo para a fase de trabalho (Pomodoro ativo) */
+.working {
+  background: #ef5d50; /* Cor de fundo durante o tempo de trabalho */
+}
+
+/* Classe para ocultar um elemento */
+.hidden {
+  display: none;
+}
+
+/* Estilo para a seção do Pomodoro */
+.pomodoro {
+  background: #fff; /* Cor de fundo do bloco do Pomodoro */
+  margin: 50px 20px; /* Margem externa superior e inferior */
+  padding: 20px; /* Preenchimento interno */
+  border-radius: 4px; /* Arredondamento das bordas */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra leve */
+}
+
+/* Estilo para o cabeçalho do Pomodoro */
+.pomodoro h2 {
+  font-size: 24px;
+  text-align: center; /* Centralizar texto */
+}
+
+/* Estilo para o timer do Pomodoro */
+.pomodoro .timer {
+  font-size: 6rem; /* Tamanho grande para o timer */
+  text-align: center; /* Centralizar o timer */
+}
+
+/* Estilo para os controles do Pomodoro */
+.pomodoro .controls {
+  display: flex; /* Exibir os controles em uma linha */
+  align-items: center; /* Alinhar verticalmente ao centro */
+  justify-content: space-evenly; /* Espaçamento uniforme entre os controles */
+}
+
+/* Estilo para os botões no Pomodoro */
+.pomodoro button {
+  background: #41e2ba; /* Cor de fundo dos botões */
+  border: none;
+  cursor: pointer;
+  padding: 10px 25px;
+  color: #000;
+  transition: background-color 300ms ease-in-out; /* Transição suave da cor de fundo */
+  margin: 20px auto; /* Margem superior e inferior */
+}
+
+/* Estilo para os botões durante a fase de trabalho (Pomodoro ativo) */
+.working .pomodoro button {
+  background: #ef5d50; /* Cor de fundo dos botões durante o tempo de trabalho */
+  color: #fff; /* Cor do texto durante o tempo de trabalho */
+}
+
+/* Estilo para os detalhes do Pomodoro (tempo restante, etc.) */
+.pomodoro .details {
+  margin: 20px 0; /* Margem superior e inferior */
 }
