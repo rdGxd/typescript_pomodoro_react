@@ -1,16 +1,16 @@
-// Função que converte um valor de segundos para o formato 'minutos:segundos'
+import { zeroLeft } from './zero-left';
+
+// Função que converte segundos para formato de horas, minutos e segundos (hh:mm:ss)
 export function secondsToTime(seconds: number): string {
-  // Função interna que adiciona um zero à esquerda se necessário
-  const zeroLeft = (n: number) => Math.floor(n).toString().padStart(2, '0');
+  // Calcula as horas dividindo os segundos por 3600 e aplicando a função zeroLeft para formatação
+  const hours = zeroLeft(Math.floor(seconds / 3600));
 
-  // Calculando os minutos (parte inteira da divisão por 60) e aplicando o zero à esquerda
-  const min = zeroLeft((seconds / 60) % 60);
+  // Calcula os minutos dividindo os segundos por 60 e aplicando a função zeroLeft para formatação
+  const min = zeroLeft(Math.floor((seconds / 60) % 60));
 
-  // Calculando os segundos (resto da divisão por 60) e aplicando o zero à esquerda
-  const sec = zeroLeft((seconds % 60) % 60);
+  // Calcula os segundos restantes após calcular as horas e os minutos, aplicando a função zeroLeft
+  const sec = zeroLeft(Math.floor(seconds % 60));
 
-  // Retornando a representação formatada 'minutos:segundos'
-  return `${min}:${sec}`;
+  // Retorna a representação formatada em horas, minutos e segundos (hh:mm:ss)
+  return `${hours}h:${min}m:${sec}s`;
 }
-
-// Esta função secondsToTime recebe um valor em segundos e o converte para o formato "minutos:segundos", aplicando zeros à esquerda conforme necessário para manter a formatação correta.
